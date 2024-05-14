@@ -30,7 +30,6 @@
     } else {
         ?>
         <button onclick="login()">LOGIN</button>
-        <button onclick="logout()">LOGOUT</button>
     <?php
     }
     ?>
