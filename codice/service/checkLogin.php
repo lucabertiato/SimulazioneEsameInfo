@@ -1,14 +1,15 @@
 <?php
 header('Content-Type: application/json');
+session_start();
 
 //credenziali per il db
 $host = "localhost";
-$user= "root";
+$user = "root";
 $psw = "";
 $dbname = "biciclette";
 
 //connessione al database
-$conn = new mysqli($host, $user, $password, $dbname);
+$conn = new mysqli($host, $user, $psw, $dbname);
 
 //check connessione
 if ($conn->connect_error) {
@@ -21,11 +22,11 @@ $password = $_POST['password'];
 
 
 //prima faccio la query nella tabella admin
-$query = "SELECT * FROM admin WHERE email=? AND password=?";
+$query = "SELECT * FROM admin WHERE username=? AND password=?";
 //preparazione
 $stmt = $conn->prepare($query);
 //metto i parametri
-$stmt->bind_param("ss", $email, $password);
+$stmt->bind_param("ss", $username, $password);
 //eseguo
 $stmt->execute();
 //prendo i risultati
@@ -33,11 +34,34 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    
+    $_SESSION["ID"] = $row["ID"];
+    $_SESSION["is_logged"] = true;
+    $_SESSION["ruolo"] = "admin";
+    $conn->close();
+    echo json_encode(array("status" => "success" , "ruolo" => "admin"));
+    exit();
 } else {
-    echo "Username non trovato.";
+    //prima faccio la query nella tabella admin
+    $query = "SELECT * FROM clienti WHERE username=? AND password=?";
+    //preparazione
+    $stmt = $conn->prepare($query);
+    //metto i parametri
+    $stmt->bind_param("ss", $username, $password);
+    //eseguo
+    $stmt->execute();
+    //prendo i risultati
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $_SESSION["ID"] = $row["ID"];
+        $_SESSION["is_logged"] = true;
+        $_SESSION["ruolo"] = "cliente";
+        $conn->close();
+        echo json_encode(array("status" => "success", "ruolo" => "cliente"));
+        exit();
+    }
+    else{
+        $conn->close();
+        echo json_encode(array("status" => "error"));
+        exit();
+    }
 }
-
-// Chiudi la connessione
-$conn->close();
-?>
