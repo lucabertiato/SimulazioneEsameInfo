@@ -14,8 +14,8 @@
             window.location.href = "profilo.php";
         }
     </script>
-    <script src="../../Js/jquery-3.7.1.min.js"></script>
-    <script src="../../Js/Secure/crypto.js" defer></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/crypto-js.min.js"></script>
     <link rel="stylesheet" href="../cdn/bootstrap.min.css">
 </head>
 

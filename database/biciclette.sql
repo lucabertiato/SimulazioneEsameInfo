@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 10, 2024 alle 08:42
+-- Creato il: Mag 20, 2024 alle 08:59
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -34,6 +34,13 @@ CREATE TABLE `admin` (
   `password` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `admin`
+--
+
+INSERT INTO `admin` (`ID`, `email`, `username`, `password`) VALUES
+(1, 'admin@gmail.com', 'admin', '21232f297a57a5a743894a0e4a801fc3');
+
 -- --------------------------------------------------------
 
 --
@@ -59,8 +66,7 @@ CREATE TABLE `cartecredito` (
   `Titolare` varchar(64) NOT NULL,
   `NumeroCarta` char(16) NOT NULL,
   `Scadenza` char(5) NOT NULL,
-  `CVV` char(3) NOT NULL,
-  `IDcliente` int(11) NOT NULL
+  `CVV` char(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -77,7 +83,8 @@ CREATE TABLE `clienti` (
   `nome` varchar(32) NOT NULL,
   `cognome` varchar(32) NOT NULL,
   `codiceTessera` char(16) NOT NULL,
-  `IDindirizzo` int(11) NOT NULL
+  `IDindirizzo` int(11) NOT NULL,
+  `IDcarta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -91,6 +98,40 @@ CREATE TABLE `indirizzi` (
   `Via` varchar(64) NOT NULL,
   `NumeroCivico` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `indirizzi`
+--
+
+INSERT INTO `indirizzi` (`ID`, `Via`, `NumeroCivico`) VALUES
+(1, 'Via Volta', 10),
+(2, 'Via Garibaldi', 23),
+(3, 'Viale Cavallotti', 18),
+(4, 'Via Coloniola', 56),
+(5, 'Via Balestra', 92),
+(6, 'Via Belvedere', 7),
+(7, 'Via Cavour', 12),
+(8, 'Via Plinio', 24),
+(9, 'Viale Lecco', 3),
+(10, 'Via Manzoni', 21),
+(11, 'Via Pascoli', 8),
+(12, 'Via Dante', 34),
+(13, 'Via Mazzini', 11),
+(14, 'Via Machiavelli', 25),
+(15, 'Via Leonardo da Vinci', 19),
+(16, 'Via Boccaccio', 58),
+(17, 'Via Rosmini', 96),
+(18, 'Via Rovelli', 77),
+(19, 'Via Cesare Cantù', 12),
+(20, 'Via Giuseppe Verdi', 32),
+(21, 'Via Pertini', 41),
+(22, 'Via Montessori', 7),
+(23, 'Via Fratelli Cairoli', 15),
+(24, 'Via Carducci', 27),
+(25, 'Via Confalonieri', 38),
+(26, 'Via Tasso', 12),
+(27, 'Via Vittorio Emanuele', 22),
+(28, 'Via Brambilla', 59);
 
 -- --------------------------------------------------------
 
@@ -146,8 +187,7 @@ ALTER TABLE `bici`
 --
 ALTER TABLE `cartecredito`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `NumeroCarta` (`NumeroCarta`),
-  ADD KEY `IDcliente` (`IDcliente`);
+  ADD UNIQUE KEY `NumeroCarta` (`NumeroCarta`);
 
 --
 -- Indici per le tabelle `clienti`
@@ -157,7 +197,8 @@ ALTER TABLE `clienti`
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `username` (`username`),
   ADD KEY `codiceTessera` (`codiceTessera`),
-  ADD KEY `IDindirizzo` (`IDindirizzo`);
+  ADD KEY `IDindirizzo` (`IDindirizzo`),
+  ADD KEY `IDcarta` (`IDcarta`);
 
 --
 -- Indici per le tabelle `indirizzi`
@@ -189,7 +230,7 @@ ALTER TABLE `stazione`
 -- AUTO_INCREMENT per la tabella `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `bici`
@@ -213,7 +254,7 @@ ALTER TABLE `clienti`
 -- AUTO_INCREMENT per la tabella `indirizzi`
 --
 ALTER TABLE `indirizzi`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT per la tabella `operazione`
@@ -238,16 +279,11 @@ ALTER TABLE `bici`
   ADD CONSTRAINT `bici_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `operazione` (`IDbici`);
 
 --
--- Limiti per la tabella `cartecredito`
---
-ALTER TABLE `cartecredito`
-  ADD CONSTRAINT `cartecredito_ibfk_1` FOREIGN KEY (`IDcliente`) REFERENCES `clienti` (`ID`);
-
---
 -- Limiti per la tabella `clienti`
 --
 ALTER TABLE `clienti`
-  ADD CONSTRAINT `clienti_ibfk_1` FOREIGN KEY (`IDindirizzo`) REFERENCES `indirizzi` (`ID`);
+  ADD CONSTRAINT `clienti_ibfk_1` FOREIGN KEY (`IDindirizzo`) REFERENCES `indirizzi` (`ID`),
+  ADD CONSTRAINT `clienti_ibfk_2` FOREIGN KEY (`IDcarta`) REFERENCES `cartecredito` (`ID`);
 
 --
 -- Limiti per la tabella `operazione`

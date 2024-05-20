@@ -15,9 +15,9 @@ if (isset($_SESSION["is_logged"])) {
 <html>
 
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
     <script src="../js/script_login.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="../js/crypto-js.min.js"></script>
     <link rel="stylesheet" href="../cdn/bootstrap.min.css">
     <style>
         .navbar {
@@ -48,7 +48,7 @@ if (isset($_SESSION["is_logged"])) {
         <input type="text" class="form-control input-margin" placeholder="Username" aria-label="username" id="username">
         <input type="password" class="form-control input-margin" placeholder="Password" aria-label="password" id="password">
         <button type="submit" class="btn btn-primary btn-margin" onclick="login()">Login</button>
-        <p class="paragraph-margin">Non hai ancora un account? <a href="registrati">Creane uno!</a></p>
+        <p class="paragraph-margin">Non hai ancora un account? <a href="registrati.php">Creane uno!</a></p>
     </div>
 </body>
 
