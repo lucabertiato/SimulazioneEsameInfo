@@ -41,33 +41,44 @@ $stmt->bind_param("ss", $email, $username);
 $stmt->execute();
 //prendo i risultati
 $result = $stmt->get_result();
-
+//se trovo un risultato non posso inserire un nuovo utente
 if ($result->num_rows > 0) {
     $conn->close();
-    echo json_encode(array("status" => "error" , "message" => "credenziali già utilizzate"));
+    echo json_encode(array("status" => "error", "message" => "credenziali già utilizzate"));
     exit();
 } else {
-    //prima faccio la query nella tabella admin
-    $query = "SELECT * FROM clienti WHERE username=? AND password=?";
+    //faccio insert per indirizzo
+    $query = "INSERT INTO `indirizzi`(`ID`, `Via`, `NumeroCivico`) VALUES (NULL, ?, ?)";
     //preparazione
     $stmt = $conn->prepare($query);
     //metto i parametri
-    $stmt->bind_param("ss", $username, $password);
+    $stmt->bind_param("ss", $via, $numeroCivico);
     //eseguo
     $stmt->execute();
+    if ($stmt->affected_rows === 0) {
+        $conn->close();
+        echo json_encode(array("status" => "error", "message" => "Errore durante l'inserimento dell'indirizzo"));
+        exit();
+    }
     //prendo i risultati
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $_SESSION["ID"] = $row["ID"];
-        $_SESSION["is_logged"] = true;
-        $_SESSION["ruolo"] = "cliente";
+    $last_id = $stmt->insert_id;
+
+    //faccio insert per utente
+    $query = "INSERT INTO `clienti`(`ID`, `email`, `username`, `password`, `nome`, `cognome`, `IDindirizzo`, `IDcarta`) VALUES (NULL,?,?,?,?,?,?,NULL)";
+    //preparazione
+    $stmt = $conn->prepare($query);
+    //metto i parametri
+    $stmt->bind_param("sssssi", $email, $username, $password, $nome, $cognome, $last_id);
+    //eseguo
+    $stmt->execute();
+    if ($stmt->affected_rows === 0) {
         $conn->close();
-        echo json_encode(array("status" => "success", "ruolo" => "cliente"));
+        echo json_encode(array("status" => "error", "message" => "Errore durante l'inserimento dell'utente"));
         exit();
     }
-    else{
-        $conn->close();
-        echo json_encode(array("status" => "error"));
-        exit();
-    }
+    $last_id_utente = $stmt->insert_id;
+    $_SESSION['carta'] = True;
+    $conn->close();
+    echo json_encode(array("status" => "success", "message" => "Utente creato con successo"));
+    exit();
 }

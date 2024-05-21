@@ -9,25 +9,28 @@ function registrazione(){
             email: $('#email').val(),
             nome: $('#nome').val(),
             cognome: $('#cognome').val(),
-            indirizzo: cambiaIndirizzo($('#indirizzo'))
+            indirizzo: cambiaIndirizzo($('#indirizzo').val())
         },
         success: function(response) {
             if (response.status == "success"){
-                window.location.href = "./login.php";
+                $('#response').html(response.message + ' <a href="login.php"> Autenticati</a>');
             }
             else {
-                $('#response').html("Errore nell'inserimento dei dati");
+                $('#response').html(response.message);
             }
         },
         error: function() {
-            $('#response').html("credenziali errate");
+            $('#response').html("errore nella registrazione");
         }
     });
 }
 
 function cambiaIndirizzo(str) {
+    if (typeof str !== 'string') {
+        console.error('cambiaIndirizzo: expected a string but got', typeof str);
+        return '';
+    }
     var tmp = str.replace(/\b\w/g, char => char.toUpperCase());
     console.log(tmp);
-    return tmp
+    return tmp;
 }
-  

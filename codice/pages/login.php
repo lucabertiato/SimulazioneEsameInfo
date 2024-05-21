@@ -39,16 +39,35 @@ if (isset($_SESSION["is_logged"])) {
 </head>
 
 <body>
-    <nav class="navbar bg-body-tertiary" class="navbar bg-primary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand">Pagina di Login</a>
+            <a class="navbar-brand" href="#">
+                <img src="../images/logo.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                Rent a Bike
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="map.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registrati.php">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="row g-3">
         <input type="text" class="form-control input-margin" placeholder="Username" aria-label="username" id="username">
         <input type="password" class="form-control input-margin" placeholder="Password" aria-label="password" id="password">
         <button type="submit" class="btn btn-primary btn-margin" onclick="login()">Login</button>
-        <p class="paragraph-margin">Non hai ancora un account? <a href="registrati.php">Creane uno!</a></p>
+        <p class="paragraph-margin" id="response"></p>
     </div>
 </body>
 

@@ -13,11 +13,11 @@ function login(){
                 window.location.href = "./map.php";
             }
             else {
-                alert("Invalid credentials");
+                $('#response').html("credenziali errate");
             }
         },
         error: function() {
-            $('#response').html("credenziali errate");
+            $('#response').html("errore nella registrazione");
         }
     });
 }

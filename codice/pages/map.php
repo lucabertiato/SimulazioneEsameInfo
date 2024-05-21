@@ -73,7 +73,7 @@ if (!isset($_SESSION)) {
     <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                <img src="../images/logo.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
                 Rent a Bike
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,12 +100,15 @@ if (!isset($_SESSION)) {
                                 <a class="nav-link" href="logout.php">Logout</a>
                             </li>
                         <!--if controllo se utente-->
-                        <?php } elseif ($_SESSION['ruolo'] == 'utente') {?>
+                        <?php } elseif ($_SESSION['ruolo'] == 'cliente') {?>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Profilo</a>
+                                <a class="nav-link" href="profilo.php">Profilo</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Logout</a>
+                                <a class="nav-link" href="riepilogo.php">Riepilogo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="logout.php">Logout</a>
                             </li>
                         <?php } //chiudo if x controllo che tipo di utente
                     }
@@ -113,6 +116,9 @@ if (!isset($_SESSION)) {
                     else {?>
                         <li class="nav-item">
                             <a class="nav-link" href="./login.php">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="registrati.php">Sign Up</>
                         </li>
                     <?php } ?>
                 </ul>

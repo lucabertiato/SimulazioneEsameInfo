@@ -1,14 +1,16 @@
 <?php
-
 if (!isset($_SESSION)) {
     session_start();
 }
 
-if (isset($_SESSION["is_logged"])) {
+if (!isset($_SESSION["is_logged"])) {
     header("Location: ./map.php");
     exit();
 }
-
+if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "cliente") {
+    header("Location: ./logout.php");
+    exit();
+}
 ?>
 
 <html>
@@ -18,6 +20,7 @@ if (isset($_SESSION["is_logged"])) {
     <script src="../js/registra.js"></script>
     <script src="../js/crypto-js.min.js"></script>
     <link rel="stylesheet" href="../cdn/bootstrap.min.css">
+    <script src="../js/profilo.js"></script>
     <style>
         .navbar {
             margin-bottom: 20px;
@@ -42,7 +45,7 @@ if (isset($_SESSION["is_logged"])) {
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="../images/logo.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-                Rent a Bike
+                Rent a bike
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -53,25 +56,24 @@ if (isset($_SESSION["is_logged"])) {
                         <a class="nav-link" aria-current="page" href="map.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.php">Login</a>
+                        <a class="nav-link active" href="registrati.php">Profilo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="registrati.php">Sign Up</a>
+                        <a class="nav-link" href="riepilogo.php">Riepilogo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="row g-3">
-        <input type="email" class="form-control input-margin" placeholder="Email" aria-label="email" id="email">
-        <input type="text" class="form-control input-margin" placeholder="Username" aria-label="username" id="username">
-        <input type="password" class="form-control input-margin" placeholder="Password" aria-label="password" id="password">
-        <input type="text" class="form-control input-margin" placeholder="Nome" aria-label="nome" id="nome">
-        <input type="text" class="form-control input-margin" placeholder="Cognome" aria-label="cognome" id="cognome">
-        <input type="text" class="form-control input-margin" placeholder="Indirizzo" aria-label="indirizzo" id="indirizzo">
-        <button type="submit" class="btn btn-primary btn-margin" onclick="registrazione()">Registrati</button>
-        <p class="paragraph-margin" id="response"></p>
+        <input type="hidden" name="userID" id="userID" value="<?php echo $_SESSION['ID']; ?>">
+        <h1>Profilo</h1>
+        <div id="cc"></div>
     </div>
+    
 </body>
 
 </html>
