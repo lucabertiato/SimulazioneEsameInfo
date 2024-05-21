@@ -10,11 +10,7 @@ function login(){
         success: function(response) {
             //response = JSON.parse(response);
             if (response.status == "success"){
-                if(response.ruolo == "admin") {
-                    window.location.href = "./paginaAdmin.php";
-                }
-                else
-                    window.location.href = "./map.php";
+                window.location.href = "./map.php";
             }
             else {
                 alert("Invalid credentials");

@@ -24,6 +24,13 @@ $cognome = $_POST['cognome'];
 $email = $_POST['email'];
 $indirizzo = $_POST['indirizzo'];
 
+//gestisco indirizzo
+//splitto per gli spazi
+$indirizzoSplit = explode(' ', $indirizzo);
+//prendo via e numero civico
+$numeroCivico = array_pop($indirizzoSplit);
+$via = implode(' ', $indirizzoSplit);
+
 //controllo se presente già qualche utente con queste credenziali univoche
 $query = "SELECT * FROM clienti WHERE email = ? or username = ?";
 //preparazione
@@ -35,15 +42,9 @@ $stmt->execute();
 //prendo i risultati
 $result = $stmt->get_result();
 
-
-//TODO RIPARTI DA QUA   
 if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $_SESSION["ID"] = $row["ID"];
-    $_SESSION["is_logged"] = true;
-    $_SESSION["ruolo"] = "admin";
     $conn->close();
-    echo json_encode(array("status" => "error" , "message" => "admin"));
+    echo json_encode(array("status" => "error" , "message" => "credenziali già utilizzate"));
     exit();
 } else {
     //prima faccio la query nella tabella admin
