@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Rent a bike in Como</title>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -9,37 +10,20 @@
     <link rel="stylesheet" href="../cdn/bootstrap.min.css">
     <style>
         #map {
-            height: 700px; /* Altezza della mappa */
-            width: 100%; /* Larghezza della mappa */
+            height: 700px;
+            /* Altezza della mappa */
+            width: 100%;
+            /* Larghezza della mappa */
         }
     </style>
-    <script>
-        var map;
-
-        function startaMappa() {
-            var options = {
-                center: [45.8105, 9.0852],
-                zoom: 13
-            };
-
-            //creo oggetto mappa
-            map = L.map('map').setView(options.center, options.zoom);
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            // Imposto i pin
-            //addTag();
-        }
-    </script>
+    <script src="../js/mappa.js"></script>
 </head>
+
 <body>
     <?php
-        session_start();
+    session_start();
     ?>
-    <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="../images/logo.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
@@ -55,7 +39,7 @@
                     </li>
                     <?php if (isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true) {
                         //if controllo se admin
-                        if ($_SESSION['ruolo'] == 'admin') {?>
+                        if ($_SESSION['ruolo'] == 'admin') { ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="stazioni.php">Gestisci Stazioni</a>
                             </li>
@@ -68,8 +52,8 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="logout.php">Logout</a>
                             </li>
-                        <!--if controllo se utente-->
-                        <?php } elseif ($_SESSION['ruolo'] == 'cliente') {?>
+                            <!--if controllo se utente-->
+                        <?php } elseif ($_SESSION['ruolo'] == 'cliente') { ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="profilo.php">Profilo</a>
                             </li>
@@ -82,7 +66,7 @@
                         <?php } //chiudo if x controllo che tipo di utente
                     }
                     //se non esite nessun ruolo 
-                    else {?>
+                    else { ?>
                         <li class="nav-item">
                             <a class="nav-link" href="./login.php">Login</a>
                         </li>
@@ -94,11 +78,12 @@
             </div>
         </div>
     </nav>
-    <div id="map"></div> 
+    <div id="map"></div>
     <script>
         $(document).ready(function() {
             startaMappa();
         });
     </script>
 </body>
+
 </html>

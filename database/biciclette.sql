@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 22, 2024 alle 09:55
+-- Creato il: Mag 23, 2024 alle 00:41
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -112,18 +112,29 @@ INSERT INTO `clienti` (`ID`, `email`, `username`, `password`, `nome`, `cognome`,
 CREATE TABLE `indirizzi` (
   `ID` int(11) NOT NULL,
   `Via` varchar(64) NOT NULL,
-  `NumeroCivico` int(11) NOT NULL
+  `NumeroCivico` int(11) NOT NULL,
+  `lat` double DEFAULT NULL,
+  `lon` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `indirizzi`
 --
 
-INSERT INTO `indirizzi` (`ID`, `Via`, `NumeroCivico`) VALUES
-(29, 'Via Milano', 8),
-(30, 'Via Como', 85),
-(34, 'Via Santa Caterina Da Siena', 7),
-(35, 'Via Milano', 4);
+INSERT INTO `indirizzi` (`ID`, `Via`, `NumeroCivico`, `lat`, `lon`) VALUES
+(29, 'Via Milano', 8, NULL, NULL),
+(30, 'Via Como', 85, NULL, NULL),
+(34, 'Via Santa Caterina Da Siena', 7, NULL, NULL),
+(35, 'Via Milano', 4, NULL, NULL),
+(38, 'Via Como', 10, 45.6772639, 9.1917183),
+(39, 'Viale Varese', 25, 45.6989952, 8.980146),
+(40, 'Via Giuseppe Brambilla', 1, 45.8133349, 9.0883878),
+(41, 'Via Milano', 10, 45.808184, 9.083636),
+(42, 'Via Giuseppe Garibaldi', 20, 45.811748, 9.084683),
+(43, 'Via Armando Diaz', 5, 45.812387, 9.082945),
+(44, 'Via Vitani', 15, 45.814059, 9.083493),
+(45, 'Via Borgo Vico', 22, 45.809868, 9.072041),
+(46, 'Via Giulio Rubini', 4, 45.8117961, 9.0766464);
 
 -- --------------------------------------------------------
 
@@ -153,6 +164,20 @@ CREATE TABLE `stazione` (
   `NumeroSlot` int(11) NOT NULL,
   `IDindirizzo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `stazione`
+--
+
+INSERT INTO `stazione` (`ID`, `Nome`, `NumeroSlot`, `IDindirizzo`) VALUES
+(3, 'Brambilla', 12, 40),
+(5, 'Stazione Garibaldi', 15, 40),
+(6, 'Stazione Diaz', 8, 41),
+(7, 'Stazione Vitani', 10, 42),
+(8, 'Stazione Borgo Vico', 20, 43),
+(9, 'Stazione Volta', 18, 44),
+(10, 'Stazione San Fermo', 20, 45),
+(11, 'Stazione Stadio', 12, 46);
 
 --
 -- Indici per le tabelle scaricate
@@ -211,6 +236,7 @@ ALTER TABLE `operazione`
 --
 ALTER TABLE `stazione`
   ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Nome` (`Nome`),
   ADD KEY `IDindirizzo` (`IDindirizzo`);
 
 --
@@ -245,7 +271,7 @@ ALTER TABLE `clienti`
 -- AUTO_INCREMENT per la tabella `indirizzi`
 --
 ALTER TABLE `indirizzi`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT per la tabella `operazione`
@@ -257,7 +283,7 @@ ALTER TABLE `operazione`
 -- AUTO_INCREMENT per la tabella `stazione`
 --
 ALTER TABLE `stazione`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Limiti per le tabelle scaricate

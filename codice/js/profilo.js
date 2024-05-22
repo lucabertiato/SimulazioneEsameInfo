@@ -16,6 +16,8 @@ $(document).ready(function() {
                 <p class="paragraph-margin" id="response"></p>`;
                 $('#cc').html(htmlContent);
             }
+            else
+                $('#div_cc').hide();
         },
         error: function() {
             $('#response').html("errore nell'inserimento");
@@ -78,8 +80,18 @@ function isValidExpiryDate(date) {
     return /^(0[1-9]|1[0-2])\/\d{2}$/.test(date);
 }
 
+function cambiaIndirizzo(str) {
+    if (typeof str !== 'string') {
+        console.error('cambiaIndirizzo: expected a string but got', typeof str);
+        return '';
+    }
+    var tmp = str.replace(/\b\w/g, char => char.toUpperCase());
+    console.log(tmp);
+    return tmp;
+}
+
 function updateIndirizzo(){
-    var via = $('#via').val();
+    var via = cambiaIndirizzo($('#via').val());
     var numero = $('#numero').val();
     $.ajax({
         type: "POST",

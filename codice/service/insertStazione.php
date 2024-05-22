@@ -17,22 +17,15 @@ if ($conn->connect_error) {
 }
 
 //prendo dati
-$nome = $_POST['username'];
+$nome = $_POST['nome'];
 $slot = $_POST['slot'];
-$indirizzo = $_POST['indirizzo'];
+$via = $_POST['indirizzo'];
+$numeroCivico = $_POST['numero'];
 $lat = $_POST['lat'];
 $lon = $_POST['lon'];
 
-
-//gestisco indirizzo
-//splitto per gli spazi
-$indirizzoSplit = explode(' ', $indirizzo);
-//prendo via e numero civico
-$numeroCivico = array_pop($indirizzoSplit);
-$via = implode(' ', $indirizzoSplit);
-
 //controllo se presente già qualche utente con queste credenziali univoche
-$query = "SELECT * FROM stazioni WHERE nome = ?";
+$query = "SELECT * FROM stazione WHERE nome = ?";
 //preparazione
 $stmt = $conn->prepare($query);
 //metto i parametri
