@@ -17,12 +17,12 @@ if ($conn->connect_error) {
 }
 
 //prendo dati
-$username = $_POST['username'];
-$password = $_POST['password'];
-$nome = $_POST['nome'];
-$cognome = $_POST['cognome'];
-$email = $_POST['email'];
+$nome = $_POST['username'];
+$slot = $_POST['slot'];
 $indirizzo = $_POST['indirizzo'];
+$lat = $_POST['lat'];
+$lon = $_POST['lon'];
+
 
 //gestisco indirizzo
 //splitto per gli spazi
@@ -32,11 +32,11 @@ $numeroCivico = array_pop($indirizzoSplit);
 $via = implode(' ', $indirizzoSplit);
 
 //controllo se presente già qualche utente con queste credenziali univoche
-$query = "SELECT * FROM clienti WHERE email = ? or username = ?";
+$query = "SELECT * FROM stazioni WHERE nome = ?";
 //preparazione
 $stmt = $conn->prepare($query);
 //metto i parametri
-$stmt->bind_param("ss", $email, $username);
+$stmt->bind_param("s", $nome);
 //eseguo
 $stmt->execute();
 //prendo i risultati
@@ -48,11 +48,11 @@ if ($result->num_rows > 0) {
     exit();
 } else {
     //faccio insert per indirizzo
-    $query = "INSERT INTO `indirizzi`(`ID`, `Via`, `NumeroCivico`, `lat`, `lon`) VALUES (NULL, ?, ?, NULL, NULL)";
+    $query = "INSERT INTO `indirizzi`(`ID`, `Via`, `NumeroCivico`, `lat`, `lon`) VALUES (NULL, ?, ?, ?, ?)";
     //preparazione
     $stmt = $conn->prepare($query);
     //metto i parametri
-    $stmt->bind_param("ss", $via, $numeroCivico);
+    $stmt->bind_param("ssdd", $via, $numeroCivico, $lat, $lon);
     //eseguo
     $stmt->execute();
     if ($stmt->affected_rows === 0) {
@@ -64,21 +64,19 @@ if ($result->num_rows > 0) {
     $last_id = $stmt->insert_id;
 
     //faccio insert per utente
-    $query = "INSERT INTO `clienti`(`ID`, `email`, `username`, `password`, `nome`, `cognome`, `IDindirizzo`, `IDcarta`) VALUES (NULL,?,?,?,?,?,?,NULL)";
+    $query = "INSERT INTO `stazione`(`ID`, `Nome`, `NumeroSlot`, `IDindirizzo`) VALUES (NULL, ?, ?, ?)";
     //preparazione
     $stmt = $conn->prepare($query);
     //metto i parametri
-    $stmt->bind_param("sssssi", $email, $username, $password, $nome, $cognome, $last_id);
+    $stmt->bind_param("sii", $nome, $slot, $last_id);
     //eseguo
     $stmt->execute();
     if ($stmt->affected_rows === 0) {
         $conn->close();
-        echo json_encode(array("status" => "error", "message" => "Errore durante l'inserimento dell'utente"));
+        echo json_encode(array("status" => "error", "message" => "Errore durante l'inserimento della stazione"));
         exit();
     }
-    $last_id_utente = $stmt->insert_id;
-    $_SESSION['carta'] = True;
     $conn->close();
-    echo json_encode(array("status" => "success", "message" => "Utente creato con successo"));
+    echo json_encode(array("status" => "success", "message" => "Stazione creat con successo"));
     exit();
 }

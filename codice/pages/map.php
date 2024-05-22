@@ -57,7 +57,7 @@
                         //if controllo se admin
                         if ($_SESSION['ruolo'] == 'admin') {?>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Gestisci Stazioni</a>
+                                <a class="nav-link" href="stazioni.php">Gestisci Stazioni</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Gestisci Slot</a>
