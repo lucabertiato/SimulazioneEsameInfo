@@ -39,7 +39,7 @@ if (isset($_SESSION["is_logged"])) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
+    <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="../images/logo.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">

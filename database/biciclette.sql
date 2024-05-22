@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 20, 2024 alle 08:59
+-- Creato il: Mag 22, 2024 alle 09:55
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -69,6 +69,14 @@ CREATE TABLE `cartecredito` (
   `CVV` char(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `cartecredito`
+--
+
+INSERT INTO `cartecredito` (`ID`, `Titolare`, `NumeroCarta`, `Scadenza`, `CVV`) VALUES
+(3, 'Luca Bertiato', 'fa1d3eb08a879de9', '12/25', 'be8'),
+(5, 'Pippo', '0fff460dde6c581f', '12/25', '03c');
+
 -- --------------------------------------------------------
 
 --
@@ -82,10 +90,18 @@ CREATE TABLE `clienti` (
   `password` varchar(32) NOT NULL,
   `nome` varchar(32) NOT NULL,
   `cognome` varchar(32) NOT NULL,
-  `codiceTessera` char(16) NOT NULL,
   `IDindirizzo` int(11) NOT NULL,
-  `IDcarta` int(11) NOT NULL
+  `IDcarta` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `clienti`
+--
+
+INSERT INTO `clienti` (`ID`, `email`, `username`, `password`, `nome`, `cognome`, `IDindirizzo`, `IDcarta`) VALUES
+(2, 'mariorossi@gmail.com', 'marioo', '0cc175b9c0f1b6a831c399e269772661', 'Mario', 'Rossi', 30, NULL),
+(3, 'pippo@gmail.com', 'pippo', '0cc175b9c0f1b6a831c399e269772661', 'Pippo', 'Pluto', 34, 5),
+(4, 'lucabertiato@gmail.com', 'luca', '4124bc0a9335c27f086f24ba207a4912', 'Luca', 'Bertiato', 35, 3);
 
 -- --------------------------------------------------------
 
@@ -104,34 +120,10 @@ CREATE TABLE `indirizzi` (
 --
 
 INSERT INTO `indirizzi` (`ID`, `Via`, `NumeroCivico`) VALUES
-(1, 'Via Volta', 10),
-(2, 'Via Garibaldi', 23),
-(3, 'Viale Cavallotti', 18),
-(4, 'Via Coloniola', 56),
-(5, 'Via Balestra', 92),
-(6, 'Via Belvedere', 7),
-(7, 'Via Cavour', 12),
-(8, 'Via Plinio', 24),
-(9, 'Viale Lecco', 3),
-(10, 'Via Manzoni', 21),
-(11, 'Via Pascoli', 8),
-(12, 'Via Dante', 34),
-(13, 'Via Mazzini', 11),
-(14, 'Via Machiavelli', 25),
-(15, 'Via Leonardo da Vinci', 19),
-(16, 'Via Boccaccio', 58),
-(17, 'Via Rosmini', 96),
-(18, 'Via Rovelli', 77),
-(19, 'Via Cesare Cantù', 12),
-(20, 'Via Giuseppe Verdi', 32),
-(21, 'Via Pertini', 41),
-(22, 'Via Montessori', 7),
-(23, 'Via Fratelli Cairoli', 15),
-(24, 'Via Carducci', 27),
-(25, 'Via Confalonieri', 38),
-(26, 'Via Tasso', 12),
-(27, 'Via Vittorio Emanuele', 22),
-(28, 'Via Brambilla', 59);
+(29, 'Via Milano', 8),
+(30, 'Via Como', 85),
+(34, 'Via Santa Caterina Da Siena', 7),
+(35, 'Via Milano', 4);
 
 -- --------------------------------------------------------
 
@@ -196,7 +188,6 @@ ALTER TABLE `clienti`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `username` (`username`),
-  ADD KEY `codiceTessera` (`codiceTessera`),
   ADD KEY `IDindirizzo` (`IDindirizzo`),
   ADD KEY `IDcarta` (`IDcarta`);
 
@@ -242,19 +233,19 @@ ALTER TABLE `bici`
 -- AUTO_INCREMENT per la tabella `cartecredito`
 --
 ALTER TABLE `cartecredito`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT per la tabella `clienti`
 --
 ALTER TABLE `clienti`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `indirizzi`
 --
 ALTER TABLE `indirizzi`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT per la tabella `operazione`

@@ -1,28 +1,19 @@
 <!DOCTYPE html>
-<?php
-
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-?>
 <html>
-
 <head>
     <title>Rent a bike in Como</title>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="../cdn/bootstrap.min.css">
+    <style>
+        #map {
+            height: 700px; /* Altezza della mappa */
+            width: 100%; /* Larghezza della mappa */
+        }
+    </style>
     <script>
-        function login() {
-            window.location.href = "login.php";
-        }
-
-        function logout() {
-            window.location.href = "logout.php";
-        }
-
-        function profilo() {
-            window.location.href = "profilo.php";
-        }
-
         var map;
 
         function startaMappa() {
@@ -31,10 +22,9 @@ if (!isset($_SESSION)) {
                 zoom: 13
             };
 
-            // Creazione oggetto mappa
+            //creo oggetto mappa
             map = L.map('map').setView(options.center, options.zoom);
 
-            // Layer
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -43,34 +33,13 @@ if (!isset($_SESSION)) {
             // Imposto i pin
             //addTag();
         }
-
-        /*function addTag() {
-            // Prendo tutte le stazioni e in base alla latitudine e longitudine metto i mark
-            $.post("php/getStazioneMappa.php", {}, function(stazioni) {
-                stazioni.forEach(function(stazione) {
-                    var marker = L.marker([stazione.lat, stazione.longi]).addTo(map);
-                    marker.bindPopup("<b>" + stazione.nome + "</b><br>" + stazione.altro);
-                });
-            }, 'json');
-        }*/
     </script>
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/crypto-js.min.js"></script>
-    <link rel="stylesheet" href="../cdn/bootstrap.min.css">
-    <!-- API mappa -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="../js/mappa.js"></script>
-    <style>
-        #map {
-            height: 700px; /* Altezza della mappa */
-            width: 100%; /* Larghezza della mappa */
-        }
-    </style>
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
+    <?php
+        session_start();
+    ?>
+    <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="../images/logo.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
@@ -82,7 +51,7 @@ if (!isset($_SESSION)) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="map.php">Home</a>
                     </li>
                     <?php if (isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true) {
                         //if controllo se admin
@@ -118,7 +87,7 @@ if (!isset($_SESSION)) {
                             <a class="nav-link" href="./login.php">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="registrati.php">Sign Up</>
+                            <a class="nav-link" href="registrati.php">Sign Up</a>
                         </li>
                     <?php } ?>
                 </ul>
@@ -132,5 +101,4 @@ if (!isset($_SESSION)) {
         });
     </script>
 </body>
-
 </html>

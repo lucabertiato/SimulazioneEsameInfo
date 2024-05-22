@@ -43,7 +43,7 @@ if(!isset($_SESSION["ruolo"]) && $_SESSION["ruolo"] == "cliente"){
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
+    <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="../images/logo.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
@@ -71,14 +71,7 @@ if(!isset($_SESSION["ruolo"]) && $_SESSION["ruolo"] == "cliente"){
         </div>
     </nav>
     <div class="row g-3">
-        <h1>Modifica il tuo profilo</h1>
-        
-    </div>
-    <div class="row g-3">
-        <h1>Tratte percorse con costo</h1>
-    </div>
-    <div class="row g-3">
-        <h1>Aggiorna profilo</h1>
+        <h1>Riepilogo tratte</h1>
     </div>
 </body>
 

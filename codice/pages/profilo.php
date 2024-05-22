@@ -41,7 +41,7 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "cliente") {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
+    <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="../images/logo.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
@@ -72,6 +72,8 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "cliente") {
         <input type="hidden" name="userID" id="userID" value="<?php echo $_SESSION['ID']; ?>">
         <h1>Profilo</h1>
         <div id="cc"></div>
+        <div id="dati"></div>
+        <div id="indirizzo"></div>
     </div>
     
 </body>
