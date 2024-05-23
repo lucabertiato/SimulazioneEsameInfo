@@ -1,5 +1,4 @@
 <?php
-
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -8,42 +7,47 @@ if (!isset($_SESSION["is_logged"])) {
     header("Location: ./map.php");
     exit();
 }
-if(!isset($_SESSION["ruolo"]) && $_SESSION["ruolo"] == "cliente"){
-    header("Location: ./logout.php");
-    exit();
-}
-
 ?>
 
-
-<html>
+<!DOCTYPE html>
+<html lang="it">
 
 <head>
+    <meta charset="UTF-8">
+    <title>Riepilogo Operazioni</title>
     <script src="../js/jquery.min.js"></script>
-    <script src="../js/script_login.js"></script>
-    <script src="../js/crypto-js.min.js"></script>
     <link rel="stylesheet" href="../cdn/bootstrap.min.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/riepilogo.js"></script>
     <style>
         .navbar {
             margin-bottom: 20px;
         }
 
-        .input-margin {
-            margin: 10px 10px;
-        }
-
-        .btn-margin {
-            margin: 10px 10px;
-        }
-
         .paragraph-margin {
             margin: 10px 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 
 <body>
-    <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary navbar-dark bg-primary" data-bs-theme="dark">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="../images/logo.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
@@ -58,7 +62,7 @@ if(!isset($_SESSION["ruolo"]) && $_SESSION["ruolo"] == "cliente"){
                         <a class="nav-link" aria-current="page" href="map.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="profilo.php">Profilo</a>
+                        <a class="nav-link " href="profilo.php">Profilo</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="riepilogo.php">Riepilogo</a>
@@ -70,8 +74,34 @@ if(!isset($_SESSION["ruolo"]) && $_SESSION["ruolo"] == "cliente"){
             </div>
         </div>
     </nav>
-    <div class="row g-3">
-        <h1>Riepilogo tratte</h1>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1>Riepilogo Operazioni</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h4>Le tue operazioni</h4>
+                <table class="table table-striped" id="operazioniTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Data/Ora</th>
+                            <th>KM Percorsi</th>
+                            <th>ID Bicicletta</th>
+                            <th>Stazione</th>
+                            <th>In Corso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dati delle operazioni verranno aggiunti qui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 

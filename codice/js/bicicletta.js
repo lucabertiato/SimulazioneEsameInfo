@@ -10,6 +10,12 @@ function caricaTabella() {
             var tableBody = $('#bicicletteTable tbody');
             tableBody.empty(); // Pulisce la tabella
             data.forEach(function (bici) {
+                let c;
+                if((bici.lat !== null && bici.lon == 0) || (bici.lat !== 0 && bici.lon == 0))
+                    c = "Posizione impossibile da rilevare";
+                else
+                    c = bici.lat + ' ' + bici.lon;
+                
                 if (bici.stato == 0)
                     var s = "Libera";
                 else
@@ -19,6 +25,7 @@ function caricaTabella() {
                     '<td>' + bici.rfid + '</td>' +
                     '<td>' + bici.gps + '</td>' +
                     '<td>' + bici.km + '</td>' +
+                    '<td>' + c + '</td>' +
                     '<td>' + s + '</td>' +
                     '<td><button class="btn btn-primary" onclick="modifica(' + bici.id + ')">Modifica</button></td>' +
                     '<td><button class="btn btn-danger" onclick="elimina(' + bici.id + ', \'' + bici.rfid + '\')">Elimina</button></td>' +

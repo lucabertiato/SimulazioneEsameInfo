@@ -54,6 +54,7 @@ if ($result->num_rows > 0) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $_SESSION["ID"] = $row["ID"];
+        $_SESSION["tessera"] = $row["tessera"];
         $_SESSION["is_logged"] = true;
         $_SESSION["ruolo"] = "cliente";
         $conn->close();

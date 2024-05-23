@@ -115,6 +115,7 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "admin") {
                             <th>RFID</th>
                             <th>GPS</th>
                             <th>KM totali</th>
+                            <th>Posizione</th>
                             <th>Stato</th>
                             <th>Modifica bicicletta</th>
                             <th>Elimina bicicletta</th>

@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 // Query per ottenere i dati delle biciclette
-$query = "SELECT b.ID, b.gps, b.KMtotali, b.tagRFID, b.stato FROM bici b WHERE b.stato IS NOT NULL";
+$query = "SELECT b.ID, b.gps, b.KMtotali, b.tagRFID, b.stato, b.lat, b.lon FROM bici b WHERE b.stato IS NOT NULL";
 
 // Esecuzione della query
 $result = $conn->query($query);
@@ -30,6 +30,8 @@ while ($row = $result->fetch_assoc()) {
         "gps" => $row['gps'],
         "rfid" => $row['tagRFID'],
         "km" => $row['KMtotali'],
+        "lat" => $row['lat'],
+        "lon" => $row['lon'],
         "stato" => $row['stato']
     );
 }
