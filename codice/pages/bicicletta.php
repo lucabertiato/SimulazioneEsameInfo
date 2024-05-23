@@ -17,7 +17,7 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "admin") {
 <html>
 
 <head>
-    <title>Gestione Stazioni</title>
+    <title>Gestione Biciclette</title>
     <script src="../js/jquery.min.js"></script>
     <script src="../js/crypto-js.min.js"></script>
     <link rel="stylesheet" href="../cdn/bootstrap.min.css">
@@ -67,7 +67,7 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "admin") {
             margin-bottom: 20px;
         }
     </style>
-    <script src="../js/stazioni.js"></script>
+    <script src="../js/bicicletta.js"></script>
 </head>
 
 <body>
@@ -85,11 +85,11 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "admin") {
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="map.php">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="stazioni.php">Gestisci Stazioni</a>
+                    <li class="nav-item">   
+                        <a class="nav-link" href="stazioni.php">Gestisci Stazioni</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="bicicletta.php">Gestisci Bicicletta</a>
+                        <a class="nav-link active" href="bicicletta.php">Gestisci Bicicletta</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Logout</a>
@@ -101,26 +101,27 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "admin") {
     <div class="container">
         <div class="row mb-4">
             <div class="col-12">
-                <h1>Gestione Stazioni</h1>
+                <h1>Gestione Biciclette</h1>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <h4>Tutte le stazioni</h4>
-                <table class="table table-striped" id="stazioniTable">
+                <h4>Tutte le biciclette</h4>
+                <table class="table table-striped" id="bicicletteTable">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Nome</th>
-                            <th>Numero Slot</th>
-                            <th>Via</th>
-                            <th>Numero Civico</th>
-                            <th>Modifica stazione</th>
-                            <th>Elimina stazione</th>
+                            <th>ID</th>
+                            <th>RFID</th>
+                            <th>GPS</th>
+                            <th>KM totali</th>
+                            <th>Stato</th>
+                            <th>Modifica bicicletta</th>
+                            <th>Elimina bicicletta</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Dati delle stazioni verranno aggiunti qui -->
+                        <!-- Dati delle biciclette verranno aggiunti qui -->
                     </tbody>
                 </table>
             </div>
@@ -128,38 +129,35 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "admin") {
 
         <div class="row mt-4">
             <div class="col-md-6">
-                <h4>Inserimento di una nuova stazione</h4>
-                <form id="stazioneForm">
-                    <input type="hidden" id="city" value="Como" disabled>
-                    <input type="hidden" id="neighborhood" placeholder="Frazione o Quartiere">
-                    <input type="hidden" id="province" value="Como" disabled>
-                    <input type="hidden" id="country" value="Italia" disabled>
+                <h4>Inserimento di una nuova bicicletta</h4>
+                <form id="biciclettaForm">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="nome" placeholder="Nome">
+                        <input type="text" class="form-control" id="rfid" placeholder="Tag RFID (R00001)">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="indirizzo" placeholder="Indirizzo">
+                        <input type="text" class="form-control" id="gps" placeholder="Tag GPS (G00001)">
                     </div>
                     <div class="mb-3">
-                        <input type="number" class="form-control" id="numero" placeholder="Numero" min="1">
+                        <select name="stazione" id="stazione" class="form-control"></select>
                     </div>
-                    <div class="mb-3">
-                        <input type="number" class="form-control" id="slot" placeholder="Numero slot max" min="1" step="1">
-                    </div>
-                    <button type="button" class="btn btn-primary" onclick="addStazioni()">Aggiungi stazione</button>
+                    <button type="button" class="btn btn-primary" onclick="addBicicletta()">Aggiungi Bicicletta</button>
                     <p class="paragraph-margin" id="response"></p>
                 </form>
             </div>
             <div class="col-md-6">
                 <div id="modifica">
-                    <h4>Modifica Stazione</h4>
-                    <form id="modificaStazioneForm">
-                        <input type="hidden" id="mod_id">
+                    <h4>Modifica Bicicletta</h4>
+                    <form id="modificaBiciclettaForm">
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="mod_nome" placeholder="Nome">
+                            <input type="hidden" class="form-control" id="mod_id">
+                            <input type="hidden" class="form-control" id="mod_id_stazione">
+                            <input type="text" class="form-control" id="mod_rfid" placeholder="Tag RFID (R00001)">
                         </div>
                         <div class="mb-3">
-                            <input type="number" class="form-control" id="mod_slot" placeholder="Numero slot max" min="1" step="1">
+                            <input type="text" class="form-control" id="mod_gps" placeholder="Tag GPS (G00001)">
+                        </div>
+                        <div class="mb-3">
+                            <select name="mod_stazione" id="mod_stazione" class="form-control"></select>
                         </div>
                         <button type="button" class="btn btn-primary" onclick="salvaModifiche()">Salva Modifiche</button>
                         <p class="paragraph-margin" id="modificaResponse"></p>

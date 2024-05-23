@@ -44,10 +44,7 @@
                                 <a class="nav-link" href="stazioni.php">Gestisci Stazioni</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Gestisci Slot</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Gestisci Bicicletta</a>
+                                <a class="nav-link" href="bicicletta.php">Gestisci Bicicletta</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="logout.php">Logout</a>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 23, 2024 alle 00:41
+-- Creato il: Mag 23, 2024 alle 16:43
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -52,8 +52,22 @@ CREATE TABLE `bici` (
   `KMtotali` int(11) NOT NULL,
   `tagRFID` varchar(16) NOT NULL,
   `gps` varchar(16) NOT NULL,
-  `stato` tinyint(1) NOT NULL
+  `stato` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `bici`
+--
+
+INSERT INTO `bici` (`ID`, `KMtotali`, `tagRFID`, `gps`, `stato`) VALUES
+(2, 0, 'R00005', 'G00005', 0),
+(3, 0, 'R00002', 'G00002', NULL),
+(4, 0, 'R00003', 'G00003', 0),
+(5, 0, 'R00004', 'G00004', NULL),
+(6, 0, 'R00006', 'G00006', NULL),
+(7, 0, 'R00007', 'G00007', NULL),
+(8, 0, 'R00008', 'G00008', 0),
+(9, 0, 'R00009', 'G00009', 0);
 
 -- --------------------------------------------------------
 
@@ -144,13 +158,31 @@ INSERT INTO `indirizzi` (`ID`, `Via`, `NumeroCivico`, `lat`, `lon`) VALUES
 
 CREATE TABLE `operazione` (
   `ID` int(11) NOT NULL,
-  `tipo` enum('Noleggio','Riconsegna') NOT NULL,
+  `tipo` enum('Noleggio','Riconsegna') DEFAULT NULL,
   `dataora` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `KMpercorsi` int(11) DEFAULT NULL,
+  `KMpercorsi` int(11) NOT NULL,
   `IDbici` int(11) NOT NULL,
-  `IDcliente` int(11) NOT NULL,
-  `IDstazione` int(11) NOT NULL
+  `IDcliente` int(11) DEFAULT NULL,
+  `IDstazione` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `operazione`
+--
+
+INSERT INTO `operazione` (`ID`, `tipo`, `dataora`, `KMpercorsi`, `IDbici`, `IDcliente`, `IDstazione`) VALUES
+(1, 'Riconsegna', '2024-05-23 09:48:01', 0, 2, NULL, 3),
+(2, 'Riconsegna', '2024-05-23 09:47:27', 0, 3, NULL, 11),
+(3, 'Riconsegna', '2024-05-23 12:32:57', 0, 2, NULL, 5),
+(4, 'Riconsegna', '2024-05-23 15:39:43', 0, 2, NULL, 6),
+(5, 'Riconsegna', '2024-05-23 15:39:53', 0, 2, NULL, 10),
+(6, NULL, '2024-05-23 16:04:22', 0, 3, NULL, NULL),
+(7, 'Riconsegna', '2024-05-23 16:22:21', 0, 4, NULL, 5),
+(8, 'Riconsegna', '2024-05-23 16:30:33', 0, 5, NULL, 11),
+(9, 'Riconsegna', '2024-05-23 16:31:13', 0, 6, NULL, 11),
+(10, 'Riconsegna', '2024-05-23 16:31:21', 0, 7, NULL, 11),
+(11, 'Riconsegna', '2024-05-23 16:33:29', 0, 8, NULL, 11),
+(12, 'Riconsegna', '2024-05-23 16:33:58', 0, 9, NULL, 7);
 
 -- --------------------------------------------------------
 
@@ -170,14 +202,14 @@ CREATE TABLE `stazione` (
 --
 
 INSERT INTO `stazione` (`ID`, `Nome`, `NumeroSlot`, `IDindirizzo`) VALUES
-(3, 'Brambilla', 12, 40),
+(3, 'Brambilla', 10, 40),
 (5, 'Stazione Garibaldi', 15, 40),
 (6, 'Stazione Diaz', 8, 41),
 (7, 'Stazione Vitani', 10, 42),
 (8, 'Stazione Borgo Vico', 20, 43),
 (9, 'Stazione Volta', 18, 44),
 (10, 'Stazione San Fermo', 20, 45),
-(11, 'Stazione Stadio', 12, 46);
+(11, 'Stazione Stadio', 1, 46);
 
 --
 -- Indici per le tabelle scaricate
@@ -253,7 +285,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT per la tabella `bici`
 --
 ALTER TABLE `bici`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT per la tabella `cartecredito`
@@ -277,7 +309,7 @@ ALTER TABLE `indirizzi`
 -- AUTO_INCREMENT per la tabella `operazione`
 --
 ALTER TABLE `operazione`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT per la tabella `stazione`
@@ -288,12 +320,6 @@ ALTER TABLE `stazione`
 --
 -- Limiti per le tabelle scaricate
 --
-
---
--- Limiti per la tabella `bici`
---
-ALTER TABLE `bici`
-  ADD CONSTRAINT `bici_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `operazione` (`IDbici`);
 
 --
 -- Limiti per la tabella `clienti`
@@ -307,7 +333,8 @@ ALTER TABLE `clienti`
 --
 ALTER TABLE `operazione`
   ADD CONSTRAINT `operazione_ibfk_1` FOREIGN KEY (`IDcliente`) REFERENCES `clienti` (`ID`),
-  ADD CONSTRAINT `operazione_ibfk_2` FOREIGN KEY (`IDstazione`) REFERENCES `stazione` (`ID`);
+  ADD CONSTRAINT `operazione_ibfk_2` FOREIGN KEY (`IDstazione`) REFERENCES `stazione` (`ID`),
+  ADD CONSTRAINT `operazione_ibfk_3` FOREIGN KEY (`IDbici`) REFERENCES `bici` (`ID`);
 
 --
 -- Limiti per la tabella `stazione`
