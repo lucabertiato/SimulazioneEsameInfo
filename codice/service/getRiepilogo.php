@@ -2,6 +2,12 @@
 header('Content-Type: application/json');
 session_start();
 
+// è necessario essere autenticati
+if (!isset($_SESSION['is_logged'])) {
+    echo json_encode(array("status" => "error", "message" => "Non autorizzato"));
+    exit();
+}
+
 // Credenziali db
 $host = "localhost";
 $user = "root";
@@ -33,6 +39,7 @@ $result = $stmt->get_result();
 
 $operazioni = array();
 while ($row = $result->fetch_assoc()) {
+    
     $operazioni[] = $row;
 }
 

@@ -2,6 +2,8 @@
 header('Content-Type: application/json');
 session_start();
 
+// Non è necessaria l'autenticazione
+
 // Credenziali per il DB
 $host = "localhost";
 $user = "root";

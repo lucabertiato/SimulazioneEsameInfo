@@ -7,21 +7,31 @@ if (!isset($_SESSION["is_logged"])) {
     header("Location: ./map.php");
     exit();
 }
+if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "admin") {
+    header("Location: ./map.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="it">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Riepilogo Operazioni</title>
+    <title>Gestione Tessere</title>
     <script src="../js/jquery.min.js"></script>
+    <script src="../js/crypto-js.min.js"></script>
     <link rel="stylesheet" href="../cdn/bootstrap.min.css">
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/riepilogo.js"></script>
     <style>
         .navbar {
             margin-bottom: 20px;
+        }
+
+        .input-margin {
+            margin-top: 10px;
+        }
+
+        .btn-margin {
+            margin: 10px 10px;
         }
 
         .paragraph-margin {
@@ -43,7 +53,21 @@ if (!isset($_SESSION["is_logged"])) {
         th {
             background-color: #f2f2f2;
         }
+
+        #modifica {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .row {
+            align-items: flex-start;
+        }
+
+        .col-md-6 {
+            margin-bottom: 20px;
+        }
     </style>
+    <script src="../js/tessera.js"></script>
 </head>
 
 <body>
@@ -61,11 +85,14 @@ if (!isset($_SESSION["is_logged"])) {
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="map.php">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="profilo.php">Profilo</a>
+                    <li class="nav-item">   
+                        <a class="nav-link" href="stazioni.php">Gestisci Stazioni</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="riepilogo.php">Riepilogo</a>
+                        <a class="nav-link" href="bicicletta.php">Gestisci Bicicletta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="tessere.php">Gestisci Tessere</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Logout</a>
@@ -74,36 +101,34 @@ if (!isset($_SESSION["is_logged"])) {
             </div>
         </div>
     </nav>
-
     <div class="container">
         <div class="row mb-4">
             <div class="col-12">
-                <h1>Riepilogo Operazioni</h1>
+                <h1>Gestione Tessere</h1>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <h4>Le tue operazioni</h4>
-                <table class="table table-striped" id="operazioniTable">
+                <h4>Tutte le Tessere</h4>
+                <table class="table table-striped" id="tessereTable">
                     <thead class="thead-dark">
                         <tr>
-                            <!--comentato KM percorsi dato che non lo gestisco-->
-                            <th>Tipo</th>
-                            <th>Data/Ora</th>
-                            <!--<th>KM Percorsi</th>-->
-                            <th>ID Bicicletta</th>
-                            <th>Stazione</th>
-                            <th>In Corso</th>
+                            <th>Email</th>
+                            <th>Numero tessera</th>
+                            <th>Stato tessera</th>
+                            <th>Operazione</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Dati delle operazioni verranno aggiunti qui -->
+                        <!-- Dati delle tessere verranno aggiunti qui -->
                     </tbody>
                 </table>
             </div>
         </div>
+
     </div>
+
 </body>
 
 </html>

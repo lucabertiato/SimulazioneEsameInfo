@@ -11,9 +11,7 @@
     <style>
         #map {
             height: 700px;
-            /* Altezza della mappa */
             width: 100%;
-            /* Larghezza della mappa */
         }
     </style>
     <script src="../js/mappa.js"></script>
@@ -45,6 +43,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="bicicletta.php">Gestisci Bicicletta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="tessere.php">Gestisci Tessere</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="logout.php">Logout</a>

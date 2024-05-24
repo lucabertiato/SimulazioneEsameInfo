@@ -19,22 +19,25 @@ $conn = new mysqli($host, $user, $psw, $dbname);
 if ($conn->connect_error) {
     die("Connessione fallita: " . $conn->connect_error);
 }
+//se la richiesta la manda admin
+if(isset($_POST['tessera']))
+    $tessera = $_POST['tessera'];
+//se la richiesta arriva da utente
+else
+    $tessera = $_SESSION['tessera'];
+$stato = 0;
 
-$numero = $_POST['numero'];
-$via = $_POST['via'];
-$idIndirizzo = $_SESSION['idUtente_indirizzo'];
-
-
-$query = "UPDATE `indirizzi` SET `Via`=?,`NumeroCivico`=? WHERE ID = ?";
+$query = "UPDATE `clienti` SET `tessera_attiva`=? WHERE tessera=?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("sii", $via, $numero, $idIndirizzo);
+$stmt->bind_param("is", $stato, $tessera);
 
 if ($stmt->execute()) {
     $conn->close();
-    echo json_encode(array("status" => "success", "message" => "inserimento andato a buon fine"));
+    echo json_encode(array("status" => "success", "message" => "richiesta di blocco andata a buon fine"));
     exit();
 } else {
     $conn->close();
-    echo json_encode(array("status" => "error", "message" => "errore inserimento"));
+    echo json_encode(array("status" => "error", "message" => "errore nella richiesta di blocco"));
     exit();
 }
+?>

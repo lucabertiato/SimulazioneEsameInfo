@@ -17,7 +17,7 @@ $(document).ready(function () {
                     table.append(`<tr>
                         <td>${operazione.tipo}</td>
                         <td>${operazione.dataora}</td>
-                        <td>${operazione.KMpercorsi}</td>
+                        <!--<td>${operazione.KMpercorsi}</td>-->
                         <td>${operazione.tagRFID}</td>
                         <td>${nomeStazione}</td>
                         <td>${inCorso}</td>

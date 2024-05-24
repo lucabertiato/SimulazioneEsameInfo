@@ -60,7 +60,7 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "cliente") {
                         <a class="nav-link" aria-current="page" href="map.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="registrati.php">Profilo</a>
+                        <a class="nav-link active" href="profilo.php">Profilo</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="riepilogo.php">Riepilogo</a>
@@ -91,6 +91,11 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "cliente") {
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body" id="indirizzo"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="tessera">
+                    <div class="card-body" id="tessera_persa"></div>
                 </div>
             </div>
         </div>

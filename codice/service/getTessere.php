@@ -2,6 +2,13 @@
 header('Content-Type: application/json');
 session_start();
 
+// solo admin
+if (!isset($_SESSION['is_logged']) || $_SESSION['ruolo'] !== 'admin') {
+    echo json_encode(array("status" => "error", "message" => "Non autorizzato"));
+    exit();
+}
+
+
 // Credenziali del database
 $host = "localhost";
 $user = "root";

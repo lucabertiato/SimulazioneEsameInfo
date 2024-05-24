@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+session_start();
 
 // Credenziali per il DB
 $host = "localhost";

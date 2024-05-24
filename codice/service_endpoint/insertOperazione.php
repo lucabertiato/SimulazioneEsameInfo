@@ -1,6 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
+session_start();
+
 // Credenziali per il database
 $host = "localhost";
 $user = "root";
@@ -29,6 +31,19 @@ if ($tipo_operazione == "Riconsegna") {
     $km_percorsi = $_POST['km_percorsi'];
 }
 
+//controllo se la tessera è attiva o meno
+$query_check_tessera = "SELECT tessera_attiva FROM clienti WHERE tessera = ?";
+$stmt_check_tessera = $conn->prepare($query_check_tessera);
+$stmt_check_tessera->bind_param("s", $tessera);
+$stmt_check_tessera->execute();
+$result_check_tessera = $stmt_check_tessera->get_result();
+$row_tessera = $result_check_tessera->fetch_assoc();
+//se la tessera è persa o bloccata non fare più nulla   
+if($row_tessera['tessera_attiva'] == 0){
+    echo json_encode(array("status" => "error", "message" => "Tessera non attiva. Impossibile effettuare operazioni"));
+    die();
+}
+//altrimenti posso proseguire
 //controllo se la bicicletta si trova presso una qualcunque stazione
 $query_check = "SELECT stato FROM bici WHERE ID = ?";
 $stmt_check = $conn->prepare($query_check);

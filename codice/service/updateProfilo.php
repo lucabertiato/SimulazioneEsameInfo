@@ -2,6 +2,13 @@
 header('Content-Type: application/json');
 session_start();
 
+// solo autenticazione
+if (!isset($_SESSION['is_logged'])) {
+    echo json_encode(array("status" => "error", "message" => "Non autorizzato"));
+    exit();
+}
+
+
 $host = "localhost";
 $user = "root";
 $psw = "";

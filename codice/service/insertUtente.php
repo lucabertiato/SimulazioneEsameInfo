@@ -24,7 +24,7 @@ $cognome = $_POST['cognome'];
 $email = $_POST['email'];
 $indirizzo = $_POST['indirizzo'];
 $tessera = $_POST['code'];
-
+$stato_tessera = 1;
 
 //gestisco indirizzo
 //splitto per gli spazi
@@ -66,11 +66,11 @@ if ($result->num_rows > 0) {
     $last_id = $stmt->insert_id;
 
     //faccio insert per utente
-    $query = "INSERT INTO `clienti`(`ID`, `email`, `username`, `password`, `nome`, `cognome`, `IDindirizzo`, `IDcarta`, `tessera`) VALUES (NULL,?,?,?,?,?,?,NULL,?)";
+    $query = "INSERT INTO `clienti`(`ID`, `email`, `username`, `password`, `nome`, `cognome`, `IDindirizzo`, `IDcarta`, `tessera`, `tessera_attiva`) VALUES (NULL,?,?,?,?,?,?,NULL,?,?)";
     //preparazione
     $stmt = $conn->prepare($query);
     //metto i parametri
-    $stmt->bind_param("sssssis", $email, $username, $password, $nome, $cognome, $last_id, $tessera);
+    $stmt->bind_param("sssssisi", $email, $username, $password, $nome, $cognome, $last_id, $tessera, $stato_tessera);
     //eseguo
     $stmt->execute();
     if ($stmt->affected_rows === 0) {

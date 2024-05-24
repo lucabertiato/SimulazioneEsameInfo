@@ -2,6 +2,12 @@
 header('Content-Type: application/json');
 session_start();
 
+// Deve essere autenticato
+if (!isset($_SESSION['is_logged'])) {
+    echo json_encode(array("status" => "error", "message" => "Non autorizzato"));
+    exit();
+}
+
 //credenziali per il db
 $host = "localhost";
 $user = "root";

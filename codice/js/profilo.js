@@ -66,6 +66,30 @@ $(document).ready(function() {
             $('#response').html("errore nell'inserimento");
         }
     });
+    //altra richiesta per la zona di modifica dei dati dell'indirizzo
+    $.ajax({
+        type: "POST",
+        url: "../service/getStatoTessera.php",
+        data: {},
+        success: function(response) {
+            if (response.status == "success"){  
+                var htmlContent = `
+                <h4>Hai perso la tua tessera?</h4>
+                <button type="submit" class="btn btn-primary btn-margin" onclick="aggiornaStatoTessera()">Ho perso la mia tessera</button>
+                <p class="paragraph-margin" id="response"></p>`;
+                $('#tessera_persa').html(htmlContent);
+            }
+            else{
+                var htmlContent = `
+                <h4>Stato tessera</h4>
+                <p class="paragraph-margin" id="response">La tua tessera e' bloccata. Per averne un'altra contatta il gestore.</p>`;
+                $('#tessera_persa').html(htmlContent);
+            }
+        },
+        error: function() {
+            $('#response').html("errore nell'inserimento");
+        }
+    });
 });
 
 function isValidCreditCardNumber(number) {
@@ -88,6 +112,23 @@ function cambiaIndirizzo(str) {
     var tmp = str.replace(/\b\w/g, char => char.toUpperCase());
     console.log(tmp);
     return tmp;
+}
+
+function aggiornaStatoTessera(){
+    if (confirm('Hai perso la tua tessera?')) {
+        $.ajax({
+            url: '../service/tesseraPersa.php',
+            type: 'POST',
+            success: function(response) {
+                //ricarico
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error('Errore nella richiesta AJAX:', status, error);
+                alert('Si è verificato un errore durante la richiesta di blocco della tessera');
+            }
+        });
+    }
 }
 
 function updateIndirizzo(){

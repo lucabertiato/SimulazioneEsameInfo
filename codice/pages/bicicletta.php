@@ -92,6 +92,9 @@ if (!isset($_SESSION["ruolo"]) || $_SESSION["ruolo"] !== "admin") {
                         <a class="nav-link active" href="bicicletta.php">Gestisci Bicicletta</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="tessere.php">Gestisci Tessere</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="logout.php">Logout</a>
                     </li>
                 </ul>
